@@ -1,0 +1,61 @@
+compilation on a bare win10 without visual studio
+						       
+	compile with msbuild
+
+	   https://visualstudio.microsoft.com/downloads/
+	   
+		   https://visualstudio.microsoft.com/downloads/
+		   
+		       Tools for Visual studio
+		       
+		           Build Tools for Visual Studio 2022
+		           
+		              vs_BuildTools.exe
+		              
+		                 execute to install
+
+	   https://stackoverflow.com/questions/25506178/getting-msbuild-exe-without-installing-visual-studio
+	   
+	   a necessary prerequisite for installation is .NET Framework Developer Pack 4.5.1. it can be installed from
+
+		    https://dotnet.microsoft.com/en-us/download/visual-studio-sdks?cid=msbuild-developerpacks
+								  
+	   now ChessV.Games.dll can be compiled using
+	   
+	   C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools>msbuild /property:Configuration=Release C:\Users\Administrator\Downloads\ChessV22Source\ChessV.Games\ChessV.Games.csproj
+	   
+	   the new dll can be found in
+	   
+	   C:\Users\Administrator\Downloads\ChessV22Source\ChessV.Games\bin\Release
+
+controlling the engine via console using the xboard protocol
+
+	https://home.hccnet.nl/h.g.muller/engine-intf.html#11
+	http://hgm.nubati.net/newspecs.html
+	https://www.gnu.org/software/xboard/engine-intf.html
+	https://github.com/ShailChoksi/lichess-bot/issues/131
+
+	setting up a classic chess game.
+
+	note: there must be a time control specification with level ..., or the app will quit with an error message.
+
+	C:\Program Files\ChessV2>ChessV.Engine.exe
+	xboard
+	new
+	setboard rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+	level 0 2 12
+	g1f3
+	move d7d5
+	quit
+
+	specify a variant. to make this work on console, a .cvc file is apparently not sufficient. instead, the new variant specification should to be hardcoded in c#, since more parameters are accessible. particular in this case the XBoardName. See skymate.cs and the new versions of generic__x10.cs, MiscellaneousCompounds.cs and ChessV.Games.csproj for details. 
+
+	note: xboard uses the rank numbers 0-9.
+
+	C:\Program Files\ChessV2>ChessV.Engine.exe
+	xboard
+	new
+	variant skymate
+	level 0 2 12
+	h0g2
+	move f8f6
