@@ -1,0 +1,45 @@
+Game 'Skymate' : 'Generic 10x10'
+{
+    // to empower chessv to play skymate without recompilation. probably only sufficient for playing the engine via the native gui, not for controlling it via console. see readme for more info.
+    
+	NumRanks = 10;
+	NumFiles = 10;
+	Symmetry = MirrorSymmetry;
+	Invented = "2019";
+	InventedBy = "UliS";
+	GameDescription1 = "True 10x10 chess is possible.";
+	GameDescription2 = "Why playing chess without the sexiest piece?.";
+
+        SetGameVariables
+	{
+		Array = "ernbqkbnre/pppppppppp/10/10/10/10/10/10/PPPPPPPPPP/ERNBQKBNRE";
+        EnPassant = true;
+		PawnMultipleMove = "Skymate";
+		PromotionTypes = "RNBEQ";
+        StalemateResult = "Loss";
+		Castling.AddChoice( "Skymate",
+			                "Kings on f1/f10 slide two squares to castle short or long with the pieces in the corner" );
+		Castling = "Skymate";
+	}
+
+	AddPieceTypes
+	{
+		AddPieceType( Rook, "Rook", "R", 500, 500 );
+		AddPieceType( Knight, "Knight", "N", 300, 300 );
+        AddPieceType( Bishop, "Bishop", "B", 300, 300 );
+        AddPieceType( Eagle, "Eagle", "E", 500, 500 );
+		AddPieceType( Queen, "Queen", "Q", 900, 900 );
+	}
+
+	AddRules
+	{
+		if( Castling == "Skymate" )
+		{
+			AddCastlingRule();
+			CastlingMove( 0, "f1", "h1", "i1", "g1", `I` );
+			CastlingMove( 0, "f1", "d1", "b1", "e1", `B` );
+			CastlingMove( 1, "f10", "h10", "i10", "g10", `i` );
+			CastlingMove( 1, "f10", "d10", "b10", "e10", `b` );
+		}
+	}
+}
